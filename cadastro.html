@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tela de cadastro</title>
+</head>
+
+    
+<style>
+
+    #tarefas {
+        align-items: center;
+        background-color: rgba(245, 239, 239, 0.089); 
+    }
+
+    #espaco {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        padding: 5px;
+    }
+
+    .hider {
+        display: none;
+    }
+
+    .primeira {
+        width: 100%;
+        height: 1500px;
+        font-family: Arial, Helvetica, sans-serif;
+        position: fixed;
+   
+    }
+
+    .primeira .h2 {
+        color: antiquewhite;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        height: 40px;
+        width: 40%;
+    
+    }
+
+    .segunda {
+        width: 80%;
+        background-color: rgba(142, 179, 204, 0.527);
+        border: solid 2px;
+        border-color: rgb(20, 20, 20);
+    }
+
+    .itens {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        padding: 5px;
+    }
+
+    .btn {
+
+        border: none;
+        padding: 10px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background .3s;
+        border-radius: 5px;
+        background-color: powderblue;
+    }
+
+    body {
+
+        background-attachment: fixed;
+        background-size: 100%; 
+        background-repeat: no-repeat;
+        background-color: grey; 
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+<center>
+    <div class="primeira" id="d1">
+        <div>
+            <h2 class="h2">CADASTRE-SE !</h2>
+            <div class="input-group" style="color: antiquewhite;">
+                <b>Nome:</b>
+                <br>
+                <input id="nm" type="text" maxlength="10" placeholder="Digite seu nome" required>
+            </div>
+            <br>
+
+            <div class="input-group" style="color: antiquewhite;">
+                <b>Email: </b>
+                <br>
+                <input id="em" type="email" minlength="10" placeholder="Digite seu email" required>
+            </div>
+            <br>
+
+            <div class="input-group" style="color: antiquewhite;">
+                <b> Login: </b>
+                <br>
+                <input id="lg" type="email" minlength="10" placeholder="Digite seu login" required>
+            </div>
+            <br>
+
+
+            <div class="input-group" style="color: antiquewhite;">
+                <b> Senha:</b>
+                <br>
+                <input id="s0" minlength="8" type="password" placeholder="Digite uma senha" required>
+            </div>
+            <br>
+
+            <div class="input-group" style="color: antiquewhite;">
+                <b>Confirme sua senha:</b>
+                <br>
+                <input id="s1" minlength="8" type="password" placeholder="Confirmar a senha" required>
+            </div>
+            <br>
+            <button class="btn" onclick="login()">Cadastrar</button>
+            <br>
+            <br>
+        </div>
+    </div>
+
+
+    <div class="hider" id="d2">
+        <div class="segunda">
+            <br>
+
+            <h2>LISTA DE TAREFAS</h2>
+
+            <h5>Digite as tarefas </h5>
+
+            <input id="texto" placeholder="Ex: lavar o carro" required>
+
+            <button onclick="adicionar()">
+                Adicionar
+            </button>
+
+            <button onclick="limpar()">
+                Excluir todas selecionadas 
+            </button>
+            <br>
+            <br>
+        </div>
+        <br>
+        <div id="tarefas">
+
+        </div>
+    </div>
+</center>
+
+
+
+
+<script>
+    var divTarefas = document.createElement('div');
+    divTarefas.setAttribute("id", "tarefas");
+    function adicionar() {
+        var conteudo = document.getElementById('texto').value;
+        if (conteudo != "") {
+
+            var novoElemento = document.createTextNode(conteudo);
+            var divNova = document.createElement('div');
+            var botao = document.createElement('button');
+            var box = document.createElement('input');
+
+
+
+            divNova.className = "itens";
+
+            box.setAttribute("type", "checkbox");
+
+            botao.innerHTML = "Remover";
+
+            botao.addEventListener("click",
+                function () {
+                    divNova.remove();
+                })
+
+            divNova.appendChild(box);
+
+            box.addEventListener('change', function () {
+                if (this.checked) {
+                    divNova.style.textDecoration = "line-through";
+                    divNova.setAttribute("id", "espaco");
+                    divNova.className = "marcados";
+                } else {
+                    divNova.style.textDecoration = "none";
+                }
+            })
+            divNova.appendChild(novoElemento);
+            divNova.appendChild(botao);
+            divTarefas.appendChild(divNova);
+            document.body.appendChild(divTarefas);
+
+            document.getElementById('texto').value = "";
+
+
+        }
+    }
+
+    function limpar() {
+        for (var a = 0; a <= 10; a++)
+            document.getElementsByClassName('marcados')[a].remove();
+        a = 0;
+    }
+
+    function login() {
+        var senha0 = document.getElementById('s0').value;
+        var senha1 = document.getElementById('s1').value;
+        var name = document.getElementById('nm').value;
+        var login = document.getElementById('em').value;
+
+        //var conferir = 1;
+        if (name == "") {
+            alert("o nome deve ser preenchido");
+        }
+        if (login.includes('@')) {
+
+        } else {
+            alert("coloque um email valido")
+        }
+        if ((senha0 == senha1) && (senha0 != "")) {
+            document.getElementById("d1").style.display = "none";
+            document.getElementById("d2").style.display = "inline";
+        }
+        else {
+            alert("senha diferente");
+        }   
+    }        
+</script>
+
+</body>
+</html>
